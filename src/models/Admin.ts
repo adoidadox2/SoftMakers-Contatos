@@ -9,7 +9,7 @@ import {
 
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import authConfig from "../config/auth";
+import authConfig from "../config/authConfig";
 
 @Entity("admin")
 export default class Admin {

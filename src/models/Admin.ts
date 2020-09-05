@@ -13,6 +13,12 @@ import authConfig from "../config/auth";
 
 @Entity("admin")
 export default class Admin {
+  constructor(name: string, username: string, password: string) {
+    this.name = name;
+    this.username = username;
+    this.password = password;
+  }
+
   @PrimaryGeneratedColumn("uuid")
   id: string;
 

@@ -1,6 +1,7 @@
 import { getRepository } from "typeorm";
 import { Request, Response } from "express";
 import User from "../models/User";
+import CreateUserService from "../services/CreateUserService";
 
 class UserController {
   async index(request: Request, response: Response): Promise<Response> {
@@ -11,9 +12,11 @@ class UserController {
     return response.json(users);
   }
   async store(request: Request, response: Response): Promise<Response> {
-    const userRepository = getRepository(User);
+    const result = await CreateUserService.execute({
+      body: { ...request.body, image: request.file.filename },
+    });
 
-    return response.json();
+    return response.json(result);
   }
   async show(request: Request, response: Response): Promise<Response> {
     const userRepository = getRepository(User);

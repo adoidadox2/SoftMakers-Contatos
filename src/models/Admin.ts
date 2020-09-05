@@ -29,9 +29,9 @@ export default class Admin {
   username: string;
 
   @Column({ type: "varchar", nullable: false })
-  password_hash: string;
+  password_hash?: string;
 
-  password: string | null;
+  password?: string | null;
 
   @CreateDateColumn()
   created_at: Date;
@@ -46,7 +46,7 @@ export default class Admin {
   }
 
   checkPassword(password: String) {
-    return bcrypt.compare(password, this.password_hash);
+    return bcrypt.compare(password, this.password_hash as string);
   }
 
   generateToken() {

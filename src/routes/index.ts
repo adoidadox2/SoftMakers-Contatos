@@ -1,4 +1,5 @@
 import { Router, Request, Response } from "express";
+import adminRouter from "./admin.routes";
 
 const routes = Router();
 
@@ -11,5 +12,7 @@ routes.get("/", (request: Request, response: Response) => {
     Status: "Online",
   });
 });
+
+routes.use("/admin", adminRouter);
 
 export default routes;

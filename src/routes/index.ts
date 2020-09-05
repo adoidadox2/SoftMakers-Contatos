@@ -1,5 +1,7 @@
 import { Router, Request, Response } from "express";
 import adminRouter from "./admin.routes";
+import sessionRouter from "./session.routes";
+import userRouter from "./user.routes";
 
 const routes = Router();
 
@@ -14,5 +16,7 @@ routes.get("/", (request: Request, response: Response) => {
 });
 
 routes.use("/admin", adminRouter);
+routes.use("/session", sessionRouter);
+routes.use("/user", userRouter);
 
 export default routes;

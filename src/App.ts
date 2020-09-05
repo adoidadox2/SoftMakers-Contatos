@@ -5,6 +5,8 @@ import "./database";
 import express, { Request, Response, NextFunction } from "express";
 import "express-async-errors";
 
+import path from "path";
+
 import helmet from "helmet";
 import cors from "cors";
 
@@ -19,6 +21,7 @@ class App {
     this.server = express();
 
     this.middlewares();
+    this.views();
     this.routes();
     this.exception();
   }
@@ -26,6 +29,10 @@ class App {
     this.server.use(helmet());
     this.server.use(cors());
     this.server.use(express.json());
+  }
+  private views(): void {
+    this.server.set("view engine", "ejs");
+    this.server.set("views", path.join(__dirname, "/src"));
   }
   private routes(): void {
     this.server.use(routes);

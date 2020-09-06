@@ -22,13 +22,13 @@ export default class Address {
   @Column({ type: "varchar", nullable: false })
   city: string;
 
-  @Column({ type: "varchar" })
+  @Column({ type: "varchar", nullable: true })
   neighborhood: string;
 
-  @Column({ type: "varchar" })
+  @Column({ type: "varchar", nullable: true })
   street: string;
 
-  @Column({ type: "varchar" })
+  @Column({ type: "varchar", nullable: true })
   house_number: string;
 
   @OneToMany((type) => User, (resident) => resident.address)

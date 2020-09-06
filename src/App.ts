@@ -36,6 +36,10 @@ class App {
   }
   private routes(): void {
     this.server.use(routes);
+    this.server.use(
+      "/uploads",
+      express.static(path.resolve(__dirname, "..", "uploads"))
+    );
   }
   private exception(): void {
     this.server.use(

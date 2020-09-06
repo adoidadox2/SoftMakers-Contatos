@@ -1,6 +1,7 @@
 import { getCustomRepository } from "typeorm";
 import { Request, Response } from "express";
 import AdminRepository from "../repositories/AdminRepository";
+import AppError from "../errors/AppError";
 
 class SessionController {
   index(request: Request, response: Response) {
@@ -14,11 +15,11 @@ class SessionController {
     const admin = await adminRepository.findOne({ where: { username } });
 
     if (!admin) {
-      return response.status(400).json({ error: "Admin not found" });
+      throw new AppError("Admin not found", 404);
     }
 
     if (!(await admin.checkPassword(password))) {
-      return response.status(401).json({ error: "Invalid password" });
+      throw new AppError("Invalid password", 401);
     }
 
     delete admin.password_hash;

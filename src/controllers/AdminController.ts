@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { getCustomRepository } from "typeorm";
 import AdminRepository from "../repositories/AdminRepository";
+import AppError from "../errors/AppError";
 
 class AdminController {
   index(request: Request, response: Response) {
@@ -12,7 +13,7 @@ class AdminController {
     const { name, username, password } = request.body;
 
     if (await adminRepository.findOne({ where: { username } })) {
-      return response.status(400).json({ error: "Username already exists" });
+      throw new AppError("Username already exists", 400);
     }
 
     const admin = adminRepository.createAdmin(name, username, password);

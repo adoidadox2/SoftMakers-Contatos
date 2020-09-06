@@ -2,18 +2,33 @@ import { getRepository } from "typeorm";
 import { Request, Response } from "express";
 import User from "../models/User";
 import CreateUserService from "../services/CreateUserService";
-
+import removeEmptyAddresses from "../utils/removeEmptyAddresses";
+import removeUselessImage from "../utils/removeUselessImage";
+import UpdateUserService from "../services/UpdateUserService";
+import AppError from "../errors/AppError";
 class UserController {
   async index(request: Request, response: Response): Promise<Response> {
     const userRepository = getRepository(User);
 
     const users = await userRepository.find();
 
-    return response.json(users);
+    const serializedUsers = users.map((user) => {
+      return {
+        id: user.id,
+        name: user.name,
+        last_name: user.last_name,
+        phone: user.phone,
+        image_url: user.image
+          ? `http://localhost:${process.env.PORT}/uploads/${user.image}`
+          : null,
+      };
+    });
+
+    return response.json(serializedUsers);
   }
   async store(request: Request, response: Response): Promise<Response> {
     const result = await CreateUserService.execute({
-      body: { ...request.body, image: request.file.filename },
+      body: { ...request.body, image: request.file?.filename },
     });
 
     return response.json(result);
@@ -21,22 +36,62 @@ class UserController {
   async show(request: Request, response: Response): Promise<Response> {
     const userRepository = getRepository(User);
 
-    const users = await userRepository.find();
+    const { userId } = request.params;
 
-    return response.json(users);
+    const user = await userRepository.findOne({
+      where: { id: userId },
+      relations: ["address"],
+    });
+
+    if (!user) {
+      throw new AppError("User not found", 404);
+    }
+
+    const serializedUser = {
+      ...user,
+      image_url: user.image
+        ? `http://localhost:${process.env.PORT}/uploads/${user.image}`
+        : null,
+    };
+
+    return response.json(serializedUser);
   }
 
   async update(request: Request, response: Response): Promise<Response> {
-    const userRepository = getRepository(User);
+    const result = await UpdateUserService.execute({
+      body: {
+        ...request.body,
+        newImage: request.file?.filename,
+        userId: request.params.userId,
+      },
+    });
 
-    return response.json();
+    return response.json(result);
   }
   async delete(request: Request, response: Response): Promise<Response> {
     const userRepository = getRepository(User);
 
-    const users = await userRepository.find();
+    const { userId } = request.params;
 
-    return response.json(users);
+    const user = await userRepository.findOne({
+      where: { id: userId },
+    });
+
+    if (!user) {
+      throw new AppError("User not found", 404);
+    }
+
+    const imageToBeDeleted = user.image;
+
+    await userRepository.remove(user);
+
+    if (imageToBeDeleted) {
+      removeUselessImage(imageToBeDeleted);
+    }
+
+    await removeEmptyAddresses();
+
+    return response.send();
   }
 }
 

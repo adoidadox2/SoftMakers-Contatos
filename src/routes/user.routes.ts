@@ -13,8 +13,8 @@ userRouter.use(ensureAuthenticated);
 
 userRouter.get("/", UserController.index);
 userRouter.post("/", upload.single("avatar"), UserController.store);
-userRouter.get("/:id", UserController.show);
-userRouter.put("/:id", UserController.update);
-userRouter.delete("/:id", UserController.delete);
+userRouter.get("/:userId", UserController.show);
+userRouter.put("/:userId", upload.single("avatar"), UserController.update);
+userRouter.delete("/:userId", UserController.delete);
 
 export default userRouter;

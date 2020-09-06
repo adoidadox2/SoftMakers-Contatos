@@ -10,6 +10,6 @@ export default interface CreateUserDTO {
     neighborhood: string;
     street: string;
     house_number: string;
-    image: string;
+    image?: string;
   };
 }

@@ -7,7 +7,11 @@ import removeUselessImage from "../utils/removeUselessImage";
 import UpdateUserService from "../services/UpdateUserService";
 import AppError from "../errors/AppError";
 class UserController {
-  async index(request: Request, response: Response): Promise<Response> {
+  create(request: Request, response: Response) {
+    return response.render("../views/createUser");
+  }
+
+  async index(request: Request, response: Response): Promise<void> {
     const userRepository = getRepository(User);
 
     const users = await userRepository.find();
@@ -24,7 +28,7 @@ class UserController {
       };
     });
 
-    return response.json(serializedUsers);
+    return response.render("../views/indexUser", { serializedUsers });
   }
   async store(request: Request, response: Response): Promise<Response> {
     const result = await CreateUserService.execute({
@@ -33,7 +37,7 @@ class UserController {
 
     return response.json(result);
   }
-  async show(request: Request, response: Response): Promise<Response> {
+  async show(request: Request, response: Response): Promise<void> {
     const userRepository = getRepository(User);
 
     const { userId } = request.params;
@@ -54,7 +58,7 @@ class UserController {
         : null,
     };
 
-    return response.json(serializedUser);
+    return response.render("../views/showUser", { serializedUser });
   }
 
   async update(request: Request, response: Response): Promise<Response> {
@@ -68,7 +72,7 @@ class UserController {
 
     return response.json(result);
   }
-  async delete(request: Request, response: Response): Promise<Response> {
+  async delete(request: Request, response: Response): Promise<void> {
     const userRepository = getRepository(User);
 
     const { userId } = request.params;
@@ -91,7 +95,7 @@ class UserController {
 
     await removeEmptyAddresses();
 
-    return response.send();
+    return response.redirect("/user");
   }
 }
 

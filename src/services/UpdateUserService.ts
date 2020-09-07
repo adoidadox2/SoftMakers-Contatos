@@ -6,6 +6,8 @@ import AppError from "../errors/AppError";
 import removeUselessImage from "../utils/removeUselessImage";
 import removeEmptyAddresses from "../utils/removeEmptyAddresses";
 
+import objectFormatter from "../utils/objectFormatter";
+
 class UpdateUserService {
   async execute({
     body: {
@@ -35,25 +37,27 @@ class UpdateUserService {
     }
 
     const existingAddress = await addressRepository.findOne({
-      where: {
+      where: objectFormatter({
         cep,
         state,
         city,
         neighborhood,
         street,
         house_number,
-      },
+      }),
     });
 
     if (!existingAddress) {
-      const createdAddress = addressRepository.create({
-        cep,
-        state,
-        city,
-        neighborhood,
-        street,
-        house_number,
-      });
+      const createdAddress = addressRepository.create(
+        objectFormatter({
+          cep,
+          state,
+          city,
+          neighborhood,
+          street,
+          house_number,
+        })
+      );
       user.address = await addressRepository.save(createdAddress);
     }
 
@@ -63,9 +67,11 @@ class UpdateUserService {
     user.phone = phone;
 
     if (newImage) {
-      const oldImage = user.image;
+      if (user.image) {
+        const oldImage = user.image;
 
-      removeUselessImage(oldImage);
+        removeUselessImage(oldImage);
+      }
 
       user.image = newImage;
     }

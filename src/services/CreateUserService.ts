@@ -2,6 +2,7 @@ import { getRepository } from "typeorm";
 import User from "../models/User";
 import Address from "../models/Address";
 import CreateUserDTO from "../dtos/CreateUserDTO";
+import objectFormatter from "../utils/objectFormatter";
 
 class CreateUserService {
   async execute({
@@ -31,25 +32,27 @@ class CreateUserService {
     });
 
     const existingAddress = await addressRepository.findOne({
-      where: {
+      where: objectFormatter({
         cep,
         state,
         city,
         neighborhood,
         street,
         house_number,
-      },
+      }),
     });
 
     if (!existingAddress) {
-      const createdAddres = addressRepository.create({
-        cep,
-        state,
-        city,
-        neighborhood,
-        street,
-        house_number,
-      });
+      const createdAddres = addressRepository.create(
+        objectFormatter({
+          cep,
+          state,
+          city,
+          neighborhood,
+          street,
+          house_number,
+        })
+      );
 
       createdUser.address = await addressRepository.save(createdAddres);
     } else {

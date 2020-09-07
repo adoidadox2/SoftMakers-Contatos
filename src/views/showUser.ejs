@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pf-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Details</title>
+    <style>
+      .container {
+        width: 100vw;
+        height: 100vh;
+        background-color: #f5f5f5;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+      }
+      .container-2 {
+        width: 20%;
+        height: min-content;
+        background-color: #d3d3d3;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      h1 {
+        font-size: 28px;
+        width: 80%;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        text-align: center;
+        margin-bottom: 24px;
+      }
+      .avatar {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+      }
+      .fields {
+        display: flex;
+        margin-top: 5px;
+        text-align: start;
+        align-items: center;
+      }
+      span {
+        margin-right: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <img src="<%=serializedUser.image_url%>" alt="avatar" class="avatar" />
+
+      <div>
+        <div class="fields">
+          <span>Nome:</span>
+          <h3><%= serializedUser.name %></h3>
+        </div>
+        <div class="fields">
+          <span>Sobrenome:</span>
+          <h3><%= serializedUser.last_name %></h3>
+        </div>
+        <div class="fields">
+          <span>Telefone:</span>
+          <h3><%= serializedUser.phone %></h3>
+        </div>
+        <div class="fields">
+          <span>email:</span>
+          <h3><%= serializedUser.email %></h3>
+        </div>
+      </div>
+      <div class="container-2">
+        <h2>Endereço</h2>
+        <div>
+          <div class="fields">
+            <span>CEP:</span>
+            <h3><%= serializedUser.address.cep %></h3>
+          </div>
+          <div class="fields">
+            <span>Estado:</span>
+            <h3><%= serializedUser.address.state %></h3>
+          </div>
+          <div class="fields">
+            <span>Cidade:</span>
+            <h3><%= serializedUser.address.city %></h3>
+          </div>
+          <div class="fields">
+            <span>Bairro:</span>
+            <h3><%= serializedUser.address.neighborhood %></h3>
+          </div>
+          <div class="fields">
+            <span>Rua:</span>
+            <h3><%= serializedUser.address.street %></h3>
+          </div>
+          <div class="fields">
+            <span>Nº Casa:</span>
+            <h3><%= serializedUser.address.house_number %></h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script type="text/javascript" src="../utils/deleteContact.js"></script>
+    <style>
+      .container {
+        width: 100vw;
+        height: 100vh;
+        background-color: #f5f5f5;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      .avatar {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+      }
+
+      table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      td,
+      th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+      }
+      tr:nth-child(even) {
+        background-color: #dddddd;
+      }
+      td a {
+        display: block;
+        padding: 16px;
+      }
+    </style>
+    <title>List Contacts</title>
+  </head>
+  <body>
+    <div class="container">
+      <table>
+        <tr>
+          <th>Avatar</th>
+          <th>Nome</th>
+          <th>Sobrenome</th>
+          <th>Telefone</th>
+        </tr>
+
+        <% serializedUsers.map(user=>{%>
+        <tr>
+          <td>
+            <a href="/user/<%= user.id %>">
+              <img src="<%=user.image_url%>" alt="avatar" class="avatar" />
+            </a>
+          </td>
+          <td>
+            <a href="/user/<%= user.id %>"> <%=user.name%> </a>
+          </td>
+          <td>
+            <a href="/user/<%= user.id %>"> <%=user.last_name%> </a>
+          </td>
+          <td>
+            <a href="/user/<%= user.id %>"> <%=user.phone%> </a>
+          </td>
+          <td>
+            <button onclick="deleteContact('<%=user.id%>')">apagar</button>
+          </td>
+        </tr>
+        <% })%>
+      </table>
+    </div>
+  </body>
+</html>

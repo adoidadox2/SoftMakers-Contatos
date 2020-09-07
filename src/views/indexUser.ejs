@@ -3,7 +3,6 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script type="text/javascript" src="../utils/deleteContact.js"></script>
     <style>
       .container {
         width: 100vw;
@@ -74,7 +73,10 @@
             <a href="/user/<%= user.id %>"> <%=user.phone%> </a>
           </td>
           <td>
-            <button onclick="deleteContact('<%=user.id%>')">apagar</button>
+            <form action="/user/<%= user.id %>?_method=DELETE" method="post">
+              <input type="hidden" name="_method" value="DELETE" />
+              <button type="submit">Deletar</button>
+            </form>
           </td>
         </tr>
         <% })%>

@@ -4,6 +4,7 @@ import "./database";
 
 import express, { Request, Response, NextFunction } from "express";
 import "express-async-errors";
+import methodOverride from "method-override";
 
 import path from "path";
 
@@ -29,6 +30,7 @@ class App {
     this.server.use(helmet());
     this.server.use(cors());
     this.server.use(express.json());
+    this.server.use(methodOverride("_method"));
   }
   private views(): void {
     this.server.set("view engine", "ejs");

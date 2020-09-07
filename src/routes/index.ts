@@ -6,13 +6,15 @@ import userRouter from "./user.routes";
 const routes = Router();
 
 routes.get("/", (request: Request, response: Response) => {
-  return response.json({
+  console.log({
     Author: "Augusto Vinicius",
     Github: "https://github.com/adoidadox2",
     Project: "SoftMakers-Contatos",
     Version: "1.0.0",
     Status: "Online",
   });
+
+  response.redirect("/user");
 });
 
 routes.use("/admin", adminRouter);

@@ -50,6 +50,17 @@
         text-align: center;
         margin-bottom: 24px;
       }
+      .list-button {
+        width: 80%;
+        height: 48px;
+        border-radius: 5px;
+        border: 0;
+        cursor: pointer;
+        font-size: 16px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        background-color: #55efc4;
+      }
     </style>
   </head>
   <body>
@@ -60,6 +71,10 @@
         class="form"
         enctype="multipart/form-data"
       >
+        <a href="/user/<%= user.id %> ">
+          <button type="button" class="list-button">Voltar para contato</button>
+        </a>
+
         <h1>Editar Contato</h1>
         <input type="file" name="avatar" accept="image/*" class="input-field" />
         <input

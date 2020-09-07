@@ -37,6 +37,17 @@
         letter-spacing: 1px;
         background-color: #55efc4;
       }
+      .list-button {
+        width: 80%;
+        height: 48px;
+        border-radius: 5px;
+        border: 0;
+        cursor: pointer;
+        font-size: 16px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        background-color: #55efc4;
+      }
       * {
         margin: 0;
         padding: 0;
@@ -60,7 +71,10 @@
         class="form"
         enctype="multipart/form-data"
       >
-        <h1>Adicionar Contato</h1>
+        <a href="/user">
+          <button type="button" class="list-button">Listar Contatos</button>
+        </a>
+        <h1>Adicionar Contatos</h1>
         <input type="file" name="avatar" accept="image/*" class="input-field" />
         <input
           name="name"
@@ -105,7 +119,7 @@
           class="input-field"
           type="number"
         />
-        <button type="submit" class="form-button">enviar</button>
+        <button type="submit" class="form-button">Adicionar</button>
       </form>
     </div>
   </body>

@@ -43,11 +43,28 @@
         display: block;
         padding: 16px;
       }
+      .form-button {
+        width: 80%;
+        height: 48px;
+        border-radius: 5px;
+        border: 0;
+        cursor: pointer;
+        font-size: 16px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        background-color: #55efc4;
+        margin: 16px 0;
+      }
     </style>
     <title>List Contacts</title>
   </head>
   <body>
     <div class="container">
+      <a href="/user/new">
+        <button type="button" class="form-button">
+          Adicionar Novo Contato
+        </button>
+      </a>
       <table>
         <tr>
           <th>Avatar</th>

@@ -9,7 +9,9 @@ import multerConfig from "../config/multerConfig";
 const userRouter = Router();
 const upload = multer(multerConfig);
 
-userRouter.use(ensureAuthenticated);
+// userRouter.use(ensureAuthenticated);
+userRouter.get("/new", UserController.newUser);
+userRouter.get("/:userId/edit", UserController.edit);
 
 userRouter.get("/", UserController.index);
 userRouter.post("/", upload.single("avatar"), UserController.store);

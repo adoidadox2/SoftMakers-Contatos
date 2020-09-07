@@ -7,8 +7,25 @@ import removeUselessImage from "../utils/removeUselessImage";
 import UpdateUserService from "../services/UpdateUserService";
 import AppError from "../errors/AppError";
 class UserController {
-  create(request: Request, response: Response) {
+  newUser(request: Request, response: Response) {
     return response.render("../views/createUser");
+  }
+  async edit(request: Request, response: Response): Promise<void> {
+    const userRepository = getRepository(User);
+
+    const { userId } = request.params;
+
+    const user = await userRepository.findOne({
+      where: { id: userId },
+      relations: ["address"],
+    });
+
+    if (!user) {
+      throw new AppError("User not found", 404);
+    }
+    return response.render("../views/updateUser", {
+      user,
+    });
   }
 
   async index(request: Request, response: Response): Promise<void> {
@@ -30,12 +47,12 @@ class UserController {
 
     return response.render("../views/indexUser", { serializedUsers });
   }
-  async store(request: Request, response: Response): Promise<Response> {
+  async store(request: Request, response: Response): Promise<void> {
     const result = await CreateUserService.execute({
       body: { ...request.body, image: request.file?.filename },
     });
 
-    return response.json(result);
+    return response.redirect("/user");
   }
   async show(request: Request, response: Response): Promise<void> {
     const userRepository = getRepository(User);
@@ -61,7 +78,7 @@ class UserController {
     return response.render("../views/showUser", { serializedUser });
   }
 
-  async update(request: Request, response: Response): Promise<Response> {
+  async update(request: Request, response: Response): Promise<void> {
     const result = await UpdateUserService.execute({
       body: {
         ...request.body,
@@ -70,7 +87,7 @@ class UserController {
       },
     });
 
-    return response.json(result);
+    return response.redirect(`/user/${result.id}`);
   }
   async delete(request: Request, response: Response): Promise<void> {
     const userRepository = getRepository(User);

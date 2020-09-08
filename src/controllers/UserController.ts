@@ -31,7 +31,15 @@ class UserController {
   async index(request: Request, response: Response): Promise<void> {
     const userRepository = getRepository(User);
 
-    const users = await userRepository.find();
+    const page = request.query?.page as string;
+
+    const users = await userRepository.find({
+      order: {
+        name: "ASC",
+      },
+      skip: parseInt(page) - 1 < 0 || undefined ? 0 : (parseInt(page) - 1) * 10,
+      take: 10,
+    });
 
     const serializedUsers = users.map((user) => {
       return {

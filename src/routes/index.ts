@@ -14,7 +14,7 @@ routes.get("/", (request: Request, response: Response) => {
     Status: "Online",
   });
 
-  response.redirect("/user");
+  response.redirect("/user?page=1");
 });
 
 routes.use("/admin", adminRouter);

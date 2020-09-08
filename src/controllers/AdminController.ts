@@ -7,7 +7,7 @@ class AdminController {
   index(request: Request, response: Response) {
     return response.render("../views/admin");
   }
-  async store(request: Request, response: Response): Promise<Response> {
+  async store(request: Request, response: Response): Promise<void> {
     const adminRepository = getCustomRepository(AdminRepository);
 
     const { name, username, password } = request.body;
@@ -23,7 +23,7 @@ class AdminController {
     delete admin.password;
     delete admin.password_hash;
 
-    return response.json(admin);
+    return response.redirect("/session");
   }
 }
 

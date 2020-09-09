@@ -3,6 +3,7 @@ import User from "../models/User";
 import Address from "../models/Address";
 import CreateUserDTO from "../dtos/CreateUserDTO";
 import objectFormatter from "../utils/objectFormatter";
+import AppError from "../errors/AppError";
 
 class CreateUserService {
   async execute({
@@ -22,6 +23,10 @@ class CreateUserService {
   }: CreateUserDTO): Promise<User> {
     const userRepository = getRepository(User);
     const addressRepository = getRepository(Address);
+
+    if (!name || !phone || !state || !city) {
+      throw new AppError("name, phone, state and city are required", 400);
+    }
 
     const createdUser = userRepository.create({
       name,

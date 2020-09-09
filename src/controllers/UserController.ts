@@ -39,6 +39,7 @@ class UserController {
       },
       skip: parseInt(page) - 1 < 0 || undefined ? 0 : (parseInt(page) - 1) * 10,
       take: 10,
+      select: ["id", "name", "last_name", "phone", "image"],
     });
 
     const serializedUsers = users.map((user) => {

@@ -147,11 +147,6 @@ Views -
 	#Edit contact
 	/user/:id/edit
 	
-Without view -
-		
-		
-	#DELETE HTTP method
-    /user/:id
 
 ## Challenges for me & Strategies to a scalable application   :chart_with_upwards_trend::
 

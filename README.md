@@ -156,7 +156,7 @@ Without view -
 ## Challenges for me & Strategies to a scalable application   :chart_with_upwards_trend::
 
  - First time creating MVC, as well as my first time dealing with HTML, I can say that I learned a lot in less than a week
-I've never used template engines before, I think it was a good experience, especially due to typescript, because I found some incredible packages (like ShellJs) needed to dynamically copy view's folder to the transpiled directory
+ - I've never used template engines before, I think it was a good experience, especially due to typescript, because I found some incredible packages (like ShellJs) needed to dynamically copy view's folder to the transpiled directory
  - I believe that for a more scalable application, a functionality for creating and authenticating users of the system must be implemented, as well as preventing large flows of requests / DDoS and add sentry to monitor the application in production
  - List users by address, using the **address 1 - N user** relation
 
